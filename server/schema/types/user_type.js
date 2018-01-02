@@ -9,4 +9,6 @@ const UserType = new GraphQLObjectType({
   fields: {
     email: { type: GraphQLString }
   }
-})
+});
+
+module.exports = UserType;
