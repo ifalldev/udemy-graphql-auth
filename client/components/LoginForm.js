@@ -6,12 +6,23 @@ import mutation from '../mutation/Login';
 import query from '../queries/CurrentUser';
 
 class LoginForm extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       errors: [],
+    }
+  }
+  
   onSubmitForm({ email, password }) {
-    console.log('login form submit event', email, password, this.props);
      this.props.mutate({ 
       variables: { email, password },
       refetchQueries: [{ query }]
-    })
+    }).catch(res => {
+      const errors = res.graphQLErrors.map(error => error.message);
+
+      this.setState({ errors });
+    });
   }
 
   render() {
@@ -19,7 +30,7 @@ class LoginForm extends Component {
       <div>
         <h3>Login</h3>
 
-        <AuthForm onSubmitForm={this.onSubmitForm.bind(this)}/>
+        <AuthForm errors={this.state.errors} onSubmitForm={this.onSubmitForm.bind(this)}/>
       </div>
     );
   }
