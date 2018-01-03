@@ -20,7 +20,7 @@ class AuthForm extends Component {
     const { email, password } = this.props;
     return (
       <div className="row">
-        <form className="col s4" onSubmit={this.onSubmitForm.bind(this)}>
+        <form className="col s8" onSubmit={this.onSubmitForm.bind(this)}>
           <div className="input-field">
             <label>Email</label>
             <input

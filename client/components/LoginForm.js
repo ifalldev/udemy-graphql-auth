@@ -5,7 +5,10 @@ import AuthForm from './AuthForm';
 class LoginForm extends Component {
   render() {
     return (
-      <AuthForm />
+      <div>
+        <h3>Login</h3>
+        <AuthForm />
+      </div>
     );
   }
 }
