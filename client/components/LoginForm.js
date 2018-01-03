@@ -22,7 +22,9 @@ class LoginForm extends Component {
       const errors = res.graphQLErrors.map(error => error.message);
 
       this.setState({ errors });
-    });
+    }).then(res => {
+      console.log('signed up');
+    })
   }
 
   render() {
