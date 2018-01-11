@@ -53,15 +53,19 @@ function signup({ email, password, req }) {
 
   return User.findOne({ email })
     .then(existingUser => {
+      console.log('finding user %s', email);
       if (existingUser) { throw new Error('Email in use'); }
       return user.save();
     })
     .then(user => {
+      console.log('new user has been created');
       return new Promise((resolve, reject) => {
-        req.logIn(user, (err) => {
-          if (err) { reject(err); }
+        req.login(user, (err) => {
+          if (err) { console.log('new user login error', err); reject(err); }
           resolve(user);
-        });
+        }).then(user => console.log('new user logged in',user))
+        .catch(error => console.log('new user login error', error));
+        // login({ email, password, req });
       });
     });
 }
@@ -75,7 +79,7 @@ function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
       if (!user) { reject('Invalid credentials.') }
-
+      console.log('login user %s', email);
       req.login(user, () => resolve(user));
     })({ body: { email, password } });
   });
