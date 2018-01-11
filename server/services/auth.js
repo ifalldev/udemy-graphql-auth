@@ -63,9 +63,7 @@ function signup({ email, password, req }) {
         req.login(user, (err) => {
           if (err) { console.log('new user login error', err); reject(err); }
           resolve(user);
-        }).then(user => console.log('new user logged in',user))
-        .catch(error => console.log('new user login error', error));
-        // login({ email, password, req });
+        })
       });
     });
 }

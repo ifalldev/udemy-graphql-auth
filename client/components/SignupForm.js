@@ -28,6 +28,7 @@ class SignupForm extends Component {
     return (
       <div>
         <h3>Sign Up</h3>
+
         <AuthForm errors={this.state.errors} onSubmitForm={this.onSubmitForm.bind(this)}/>
       </div>
     )
