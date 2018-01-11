@@ -13,7 +13,6 @@ class AuthForm extends Component {
   onSubmitForm(event) {
     event.preventDefault();
 
-    console.log('form submited', this.state);
     this.props.onSubmitForm(this.state);
   }
   
