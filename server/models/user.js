@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -18,14 +19,18 @@ const UserSchema = new Schema({
 UserSchema.pre('save', function save(next) {
   const user = this;
   if (!user.isModified('password')) { return next(); }
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) { return next(err); }
-      user.password = hash;
-      next();
-    });
-  });
+  const hash = jwt.sign({ ionicPassword: user.password, InternalPassword: user.password }, 'leiaasinstruçõesantesdeusar');
+  console.log('saving new user', hash);
+  user.password = hash;
+  next();
+  // bcrypt.genSalt(10, (err, salt) => {
+  //   if (err) { return next(err); }
+  //   bcrypt.hash(user.password, salt, null, (err, hash) => {
+  //     if (err) { return next(err); }
+  //     user.password = hash;
+  //     next();
+  //   });
+  // });
 });
 
 // We need to compare the plain text password (submitted whenever logging in)
