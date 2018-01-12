@@ -39,9 +39,15 @@ UserSchema.pre('save', function save(next) {
 // that hashed password to the one stored in the DB.  Remember that hashing is
 // a one way process - the passwords are never compared in plain text form.
 UserSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch);
-  });
+  console.log('start compare password', candidatePassword, this);
+  const normalizedHash = jwt.verify(this.password, 'leiaasinstruçõesantesdeusar');
+  console.log('normalizedHash', normalizedHash);
+  if(candidatePassword != normalizedHash.InternalPassword) cb('Invalid Password');
+  console.log('password right', normalizedHash.InternalPassword);
+  cb(null, true);
+  // bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+  //   cb(err, isMatch);
+  // });
 };
 
 mongoose.model('user', UserSchema);
